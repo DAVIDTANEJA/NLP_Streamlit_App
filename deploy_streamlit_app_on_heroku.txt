@@ -1,0 +1,77 @@
+1.signup and signin on heroku.
+2.install heroku CLI  : devcenter.heroku.com
+3.open cmd prompt type >> heroku --help
+
+4.Need a github account signup & signin, put all code in a github repository 
+
+5.To deploy on Heroku must need 4 files 
+-> "setup.sh" file         # where put all credentials and configurations. And
+-> "Procfile" file         # to tell web and run app
+-> "requirements.txt"      # install all libraries , use cmd > pip freeze
+-> "runtime"           # takes python version
+
+6. also main "app.py" file which have all code 
+
+
+------------------------------------
+------------------------------------
+Procfile
+
+web: gunicorn app: app                    # used for flask
+web: sh setup.sh && streamlit run app.py     # used for Streamlit app , "app.py" file name  
+
+
+------------------------------------
+setup.sh  file
+
+2 types of code used here, 1 with gmail account and other without it.
+
+# 1
+mkdir -p ~/.streamlit/
+
+echo *\
+[general]\n\
+email = \"here comes @gmail.com"\*\n\
+* > ~/.streamlit/credentials.toml
+
+echo *\
+[server]\n\
+headless = true\n\
+enableCORS=false\n\
+port = $PORT\n\
+* > ~/.streamlit/config.toml
+
+
+# 2                                            # use 2nd type.
+mkdir -p ~/.streamlit
+
+echo "[server]
+headless = true
+port = $PORT
+enableCORS = false
+" > ~/.streamlit/config.toml
+
+
+----------------------------------------------------
+requirements.txt
+
+1.pip install pipreqs
+
+2.pipreqs <directory path>      It creates requirements.txt file in directory folder and libraries name
+
+--------------------------------
+runtime
+
+python-3.6.8                 # in cmd prompt type > python    # shows version.
+
+
+
+
+
+
+
+
+
+
+
+

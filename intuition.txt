@@ -1,0 +1,62 @@
+pip install streamlit
+pip install spacy
+pip install nltk
+pip install textblob
+
+
+# for spacy "en_core_web_sm"  if it shows error.
+# pip3 install https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-2.2.0/en_core_web_sm-2.2.0.tar.gz
+
+
+------------------------------------------------------
+
+# using nltk instead of spacy
+import nltk
+from nltk.tokenize import word_tokenize
+
+def text_analyzer(my_text):
+    docx = word_tokenize(my_text)
+    tokens = [token for token in docx]  # tokenize it
+    return tokens
+
+
+-------------------------------------------
+
+# spacy  ,  tokenization and lemmatization
+
+import spacy  
+
+def text_analyzer(my_text):                
+    nlp = spacy.load('en_core_web_sm')     # create object of spacy
+    docx = nlp(my_text)                    # use on text
+
+    # tokenization and lemmatization
+    all_data = [(f"Tokens : {token.text}  and  Lemmas : {token.lemma_}") for token in docx]
+    return all_data
+
+    # named entity recognition    
+    entites = [(entity.text, entity.label_) for entity in docx.ents]
+
+
+----------------------------------------
+
+# sumy - text summarization
+
+from sumy.parsers.plaintext import PlaintextParser    
+from sumy.nlp.tokenizers import Tokenizer
+from sumy.summarizers.lex_rank import LexRankSummarizer  
+
+def sumy_summarizer(docx):
+    parser = PlaintextParser.from_string(docx, Tokenizer("english"))
+    lex_summarizer = LexRankSummarizer()   # create object
+    summary = lex_summarizer(parser.document, 3)
+    summary_list = [str(sentence) for sentence in summary]
+    result = ' '.join(summary_list)
+    return result
+
+----------------------------
+# gensim
+
+from gensim.summarization import summarize    
+
+summary_result = summarize(message)           # message - var. where text data comes
